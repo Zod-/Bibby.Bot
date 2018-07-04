@@ -1,4 +1,4 @@
-﻿namespace WebBot
+﻿namespace Bibby.Bot.Options
 {
     public class AuthenticationOptions
     {
