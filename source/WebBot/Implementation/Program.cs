@@ -1,4 +1,6 @@
 ﻿using System.Threading.Tasks;
+using Bibby.Bot.Options;
+using Bibby.Bot.Services;
 using Discord;
 using Discord.Rest;
 using Discord.WebSocket;
@@ -7,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace WebBot
+namespace Bibby.Bot
 {
     public class Program
     {
@@ -27,15 +29,13 @@ namespace WebBot
         private static void ConfigureAppConfiguration(HostBuilderContext context, IConfigurationBuilder config)
         {
             config
-                .AddJsonFile("appsettings.json", optional: true)
-                .AddJsonFile($"appsettings.{context.HostingEnvironment.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables()
-                .Build();
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange:true)
+                .AddJsonFile($"appsettings.{context.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables();
         }
 
         private static void ConfigureLogging(HostBuilderContext context, ILoggingBuilder logging)
         {
-            logging.AddConfiguration(context.Configuration.GetSection("Logging"));
             logging.AddConsole();
             logging.AddDebug();
         }
@@ -43,12 +43,17 @@ namespace WebBot
         private static void ConfigureServices(HostBuilderContext context, IServiceCollection services)
         {
             services.AddLogging();
-            services.Configure<AuthenticationOptions>(o => context.Configuration.GetSection("AuthenticationOptions").Bind(o));
+            services.Configure<AuthenticationOptions>(context.Configuration.GetSection("AuthenticationOptions"));
             var discordClient = new DiscordSocketClient();
+
             services.AddSingleton<IDiscordClient>(discordClient);
             services.AddSingleton<BaseDiscordClient>(discordClient);
-            services.AddSingleton<IHostedService, LogService>();
-            services.AddSingleton<IHostedService, LoginService>();
+            services.AddSingleton(discordClient);
+
+            services.AddHostedService<LifetimeEventsHostedService>();
+            services.AddHostedService<LogService>();
+            services.AddHostedService<LoginService>();
+            services.AddHostedService<ChatService>();
         }
     }
 }
