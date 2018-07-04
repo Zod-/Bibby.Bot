@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Bibby.Bot.Options;
 using Discord;
 using Discord.Rest;
-using Discord.WebSocket;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 
-namespace WebBot
+namespace Bibby.Bot.Services
 {
     public class LoginService : IHostedService, IDisposable
     {

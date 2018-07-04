@@ -4,16 +4,20 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Rest;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
-namespace WebBot
+namespace Bibby.Bot.Services
 {
     public class LogService : IHostedService
     {
         private readonly BaseDiscordClient _discordClient;
+        private readonly ILogger _logger;
 
-        public LogService(BaseDiscordClient discordClient)
+        public LogService(BaseDiscordClient discordClient, ILogger<LogService> logger)
         {
             _discordClient = discordClient;
+            _logger = logger;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -30,7 +34,7 @@ namespace WebBot
 
         private Task DiscordClientOnLog(LogMessage logMessage)
         {
-            Console.WriteLine(logMessage.ToString());
+            _logger.LogInformation(logMessage.ToString());
             return Task.CompletedTask;
         }
     }
