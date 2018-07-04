@@ -31,6 +31,8 @@ namespace Bibby.Bot
             config
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange:true)
                 .AddJsonFile($"appsettings.{context.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("secrets.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"secrets.{context.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();
         }
 
@@ -43,7 +45,7 @@ namespace Bibby.Bot
         private static void ConfigureServices(HostBuilderContext context, IServiceCollection services)
         {
             services.AddLogging();
-            services.Configure<AuthenticationOptions>(context.Configuration.GetSection("AuthenticationOptions"));
+            services.Configure<DiscordOptions>(context.Configuration.GetSection("DiscordOptions"));
             var discordClient = new DiscordSocketClient();
 
             services.AddSingleton<IDiscordClient>(discordClient);
