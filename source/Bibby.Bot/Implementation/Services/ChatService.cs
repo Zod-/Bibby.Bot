@@ -35,7 +35,7 @@ namespace Bibby.Bot.Services
             {
                 await socketMessage.Channel.SendMessageAsync("Pong");
             }
-            if (socketMessage.Content.ToLower().StartsWith("!gdrp"))
+            if (socketMessage.Content.ToLower().StartsWith("!gdpr"))
             {
                 await socketMessage.Channel.SendMessageAsync("I ain't saving shit.");
             }
