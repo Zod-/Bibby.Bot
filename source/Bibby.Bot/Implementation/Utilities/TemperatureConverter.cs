@@ -1,4 +1,4 @@
-﻿namespace Bibby.Bot.Utilities
+﻿namespace Bibby.Bot.Utilities.Temperature
 {
     public static class TemperatureConverter
     {

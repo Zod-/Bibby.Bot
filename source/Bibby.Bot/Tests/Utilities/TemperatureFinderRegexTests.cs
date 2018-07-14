@@ -1,7 +1,7 @@
 using Bibby.Bot.Utilities;
 using Xunit;
 
-namespace Bibby.Bot.Tests.Utilities
+namespace Bibby.Bot.Tests.Utilities.Temperature
 {
     public class TemperatureFinderRegexTests
     {

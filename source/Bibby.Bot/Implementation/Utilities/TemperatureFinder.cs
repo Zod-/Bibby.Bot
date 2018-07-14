@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace Bibby.Bot.Utilities
+namespace Bibby.Bot.Utilities.Temperature
 {
     public static class TemperatureFinder
     {
