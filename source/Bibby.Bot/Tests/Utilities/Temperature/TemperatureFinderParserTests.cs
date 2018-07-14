@@ -1,6 +1,4 @@
-﻿
-
-using Bibby.Bot.Utilities;
+﻿using Bibby.Bot.Utilities.Temperature;
 using Xunit;
 
 namespace Bibby.Bot.Tests.Utilities.Temperature

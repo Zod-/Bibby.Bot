@@ -1,4 +1,4 @@
-using Bibby.Bot.Utilities;
+using Bibby.Bot.Utilities.Temperature;
 using Xunit;
 
 namespace Bibby.Bot.Tests.Utilities.Temperature
@@ -7,6 +7,7 @@ namespace Bibby.Bot.Tests.Utilities.Temperature
     {
         [Theory]
         [InlineData("30°C", "30°C")]
+        [InlineData("30°c", "30°c")]
         [InlineData("30C", "30C")]
         [InlineData("30.0°C", "30.0°C")]
         [InlineData("413,0°C", "413,0°C")]
@@ -24,6 +25,7 @@ namespace Bibby.Bot.Tests.Utilities.Temperature
         [Theory]
         [InlineData("30°F", "30°F")]
         [InlineData("30F", "30F")]
+        [InlineData("30f", "30f")]
         [InlineData("30.0°F", "30.0°F")]
         [InlineData("500,0°F", "500,0°F")]
         [InlineData("-30,5°F", "-30,5°F")]
@@ -39,6 +41,7 @@ namespace Bibby.Bot.Tests.Utilities.Temperature
 
         [Theory]
         [InlineData("30°K", "30°K")]
+        [InlineData("30K", "30K")]
         [InlineData("30.0°K", "30.0°K")]
         [InlineData("0,01°K", "0,01°K")]
         [InlineData("-30,5°K", "-30,5°K")]
@@ -56,7 +59,7 @@ namespace Bibby.Bot.Tests.Utilities.Temperature
         [InlineData("30°C 30°C", "30°C", "30°C")]
         [InlineData("30,0°C -30,5°C 0°C 25°C", "30,0°C", "-30,5°C", "0°C", "25°C")]
         [InlineData("30C 30°C 30.0°C 30.00°C", "30C", "30°C", "30.0°C", "30.00°C")]
-        [InlineData("30C 30°C 367ukj6783 67k367k 30.0°C trzh56jhwq6uji3w5j 30.00°C wz7j3673e68", "30C", "30°C", "30.0°C", "30.00°C")]
+        [InlineData("30C 30°C 367ukj6783 67367 30.0°C trzh56jhwq6uji3w5j 30.00°C wz7j3673e68", "30C", "30°C", "30.0°C", "30.00°C")]
         public void GetMultipleTemperatureCelsiusRegexMentionsTest(string input, params string[] expected)
         {
             var actual = TemperatureFinder.GetTemperatureRegexMatches(input);
