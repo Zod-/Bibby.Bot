@@ -22,7 +22,7 @@ namespace Bibby.Bot.Utilities.Temperature
         internal static string KelvinToSunSurfacePercentage(double kelvin)
         {
             var percentage = kelvin / SunSurfaceTemp * 100;
-            return string.Format(CultureInfo.InvariantCulture, "{0:0.##}% of the surface of the Sun.", percentage);
+            return string.Format(CultureInfo.InvariantCulture, "{0:0.#####}% of the surface of the sun", percentage);
         }
 
         private const double SunSurfaceTemp = 5778;
