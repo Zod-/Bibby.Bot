@@ -8,8 +8,9 @@
 
     public enum TemperatureUnit
     {
+        Unknown,
         Celsius,
         Fahrenheit,
-        Kelvin
+        Kelvin,
     }
 }
