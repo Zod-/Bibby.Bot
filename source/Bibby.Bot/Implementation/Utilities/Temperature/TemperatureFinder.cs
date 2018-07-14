@@ -6,7 +6,7 @@ namespace Bibby.Bot.Utilities.Temperature
 {
     public static class TemperatureFinder
     {
-        private const string TemperatureRegex = @"[+-]?\d+(?:[\.,]\d+)?°?[CcFfK]";
+        private const string TemperatureRegex = @"([+-]?\d+(?:[\.,]\d+)?°?[CcFfK])(?:\s|$)";
         private const string ReplaceUnitRegex = @"°?[CcFfK]";
         private static readonly CultureInfo DotCulture = CultureInfo.InvariantCulture;
         private static readonly CultureInfo CommaCulture = CultureInfo.GetCultureInfo("EN-DE");
@@ -67,7 +67,7 @@ namespace Bibby.Bot.Utilities.Temperature
 
             foreach (Match match in matchCollection)
             {
-                yield return match.Groups[0].Value;
+                yield return match.Groups[1].Value;
             }
         }
     }
