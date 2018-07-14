@@ -30,14 +30,14 @@ namespace Bibby.Bot.Utilities
             return ret;
         }
 
-        internal static float ParseTemperatureDegrees(string input)
+        internal static double ParseTemperatureDegrees(string input)
         {
             input = Regex.Replace(input, ReplaceUnitRegex, string.Empty, RegexOptions.IgnoreCase | RegexOptions.Compiled);
-            if (float.TryParse(input,NumberStyles.Float, DotCulture,out var dotResult))
+            if (double.TryParse(input,NumberStyles.Float, DotCulture,out var dotResult))
             {
                 return dotResult;
             }
-            if (float.TryParse(input, NumberStyles.Float, CommaCulture, out var commaResult))
+            if (double.TryParse(input, NumberStyles.Float, CommaCulture, out var commaResult))
             {
                 return commaResult;
             }

@@ -2,7 +2,7 @@
 {
     public class TemperatureMention
     {
-        public float Degrees { get; set; }
+        public double Degrees { get; set; }
         public TemperatureUnit TemperatureUnit { get; set; }
     }
 
