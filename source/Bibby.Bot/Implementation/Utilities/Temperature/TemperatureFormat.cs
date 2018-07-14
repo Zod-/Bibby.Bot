@@ -1,5 +1,4 @@
-﻿
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace Bibby.Bot.Utilities.Temperature
 {
@@ -19,5 +18,13 @@ namespace Bibby.Bot.Utilities.Temperature
         {
             return string.Format(CultureInfo.InvariantCulture, "{0:0.##}K", kelvin);
         }
+
+        internal static string KelvinToSunSurfacePercentage(double kelvin)
+        {
+            var percentage = kelvin / SunSurfaceTemp * 100;
+            return string.Format(CultureInfo.InvariantCulture, "{0:0.##}% of the surface of the Sun.", percentage);
+        }
+
+        private const double SunSurfaceTemp = 5778;
     }
 }
