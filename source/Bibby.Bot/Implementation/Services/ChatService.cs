@@ -6,7 +6,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Bibby.Bot.Services
 {
-    class ChatService : IHostedService
+    // ReSharper disable once ClassNeverInstantiated.Global
+    public class ChatService : IHostedService
     {
         private readonly DiscordSocketClient _discordClient;
         private readonly ILogger _logger;

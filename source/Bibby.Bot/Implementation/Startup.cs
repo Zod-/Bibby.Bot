@@ -4,21 +4,21 @@ using Discord;
 using Discord.Rest;
 using Discord.WebSocket;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace Bibby.Bot
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class Startup
     {
+        private IConfiguration Configuration { get; set; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -30,9 +30,8 @@ namespace Bibby.Bot
             services.AddSingleton<BaseDiscordClient>(discordClient);
             services.AddSingleton(discordClient);
 
-            services.AddHostedService<LifetimeEventsHostedService>();
-            services.AddHostedService<LogService>();
-            services.AddHostedService<LoginService>();
+            services.AddHostedService<DiscordClientLogService>();
+            services.AddHostedService<DiscordLoginService>();
             services.AddHostedService<ChatService>();
             services.AddHostedService<TemperatureService>();
         }

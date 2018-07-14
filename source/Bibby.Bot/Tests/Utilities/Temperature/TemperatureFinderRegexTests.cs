@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Linq;
 using Bibby.Bot.Utilities.Temperature;
 using Xunit;
 
@@ -19,9 +21,9 @@ namespace Bibby.Bot.Tests.Utilities.Temperature
         [InlineData("Random text around temperature.30.5°C", "30.5°C")]
         public void GetTemperatureCelsiusRegexMentionsTest(string input, params string[] expected)
         {
-            var actual = TemperatureFinder.GetTemperatureRegexMatches(input);
+            var actual = TemperatureFinder.GetTemperatureRegexMatches(input).ToList();
             Assert.Equal(expected, actual);
-            Assert.Single(actual);
+            Assert.Single((IEnumerable) actual);
         }
 
         [Theory]
@@ -37,7 +39,7 @@ namespace Bibby.Bot.Tests.Utilities.Temperature
         [InlineData("Random text around temperature.30.5°F", "30.5°F")]
         public void GetTemperatureFahrenheitRegexMentionsTest(string input, params string[] expected)
         {
-            var actual = TemperatureFinder.GetTemperatureRegexMatches(input);
+            var actual = TemperatureFinder.GetTemperatureRegexMatches(input).ToList();
             Assert.Equal(expected, actual);
             Assert.Single(actual);
         }
@@ -54,7 +56,7 @@ namespace Bibby.Bot.Tests.Utilities.Temperature
         [InlineData("Random text around temperature.30.5°K", "30.5°K")]
         public void GetTemperatureKelvinRegexMentionsTest(string input, params string[] expected)
         {
-            var actual = TemperatureFinder.GetTemperatureRegexMatches(input);
+            var actual = TemperatureFinder.GetTemperatureRegexMatches(input).ToList();
             Assert.Equal(expected, actual);
             Assert.Single(actual);
         }

@@ -1,17 +1,7 @@
 ﻿using System.IO;
-using System.Threading.Tasks;
-using Bibby.Bot.Options;
-using Bibby.Bot.Services;
-using Discord;
-using Discord.Rest;
-using Discord.WebSocket;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using EnvironmentName = Microsoft.Extensions.Hosting.EnvironmentName;
 
 namespace Bibby.Bot
 {
@@ -73,8 +63,8 @@ namespace Bibby.Bot
         //    services.AddSingleton(discordClient);
 
         //    services.AddHostedService<LifetimeEventsHostedService>();
-        //    services.AddHostedService<LogService>();
-        //    services.AddHostedService<LoginService>();
+        //    services.AddHostedService<DiscordClientLogService>();
+        //    services.AddHostedService<DiscordLoginService>();
         //    services.AddHostedService<ChatService>();
         //    services.AddHostedService<TemperatureService>();
         //}

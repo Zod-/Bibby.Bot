@@ -8,13 +8,14 @@ using Microsoft.Extensions.Options;
 
 namespace Bibby.Bot.Services
 {
-    public class LoginService : IHostedService
+    // ReSharper disable once ClassNeverInstantiated.Global
+    public class DiscordLoginService : IHostedService
     {
         private readonly BaseDiscordClient _baseClient;
         private readonly IDiscordClient _discordClient;
         private readonly DiscordOptions _authOptions;
 
-        public LoginService(BaseDiscordClient loginClient, IOptions<DiscordOptions> authOptions)
+        public DiscordLoginService(BaseDiscordClient loginClient, IOptions<DiscordOptions> authOptions)
         {
             _discordClient = _baseClient = loginClient;
             _authOptions = authOptions.Value;
