@@ -56,6 +56,7 @@ namespace Bibby.Bot
             services.AddHostedService<LogService>();
             services.AddHostedService<LoginService>();
             services.AddHostedService<ChatService>();
+            services.AddHostedService<TemperatureService>();
         }
     }
 }
