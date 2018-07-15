@@ -1,4 +1,5 @@
-﻿using Bibby.Bot.Options;
+﻿using System.IO;
+using Bibby.Bot.Options;
 using Bibby.Bot.Services;
 using Discord;
 using Discord.Rest;
@@ -15,9 +16,16 @@ namespace Bibby.Bot
     {
         private IConfiguration Configuration { get; set; }
 
-        public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
+            Configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("secrets.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"secrets.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables()
+                .Build();
         }
 
         public void ConfigureServices(IServiceCollection services)
