@@ -7,6 +7,7 @@ using Bibby.Bot.Options;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Bibby.Bot.Services
@@ -18,13 +19,15 @@ namespace Bibby.Bot.Services
         private readonly IServiceProvider _services;
         private readonly DiscordOptions _options;
         private IEnumerable<ModuleInfo> _modules;
+        private ILogger<CommandHandlingService> _logger;
 
-        public CommandHandlingService(IServiceProvider services, CommandService commandServiceService, DiscordSocketClient discordClientClient, IOptions<DiscordOptions> options)
+        public CommandHandlingService(IServiceProvider services, CommandService commandServiceService, DiscordSocketClient discordClientClient, IOptions<DiscordOptions> options, ILogger<CommandHandlingService> logger)
         {
             _commandService = commandServiceService;
             _discordClient = discordClientClient;
             _services = services;
             _options = options.Value;
+            _logger = logger;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
@@ -61,7 +64,7 @@ namespace Bibby.Bot.Services
 
             if (result.Error.HasValue && result.Error.Value != CommandError.UnknownCommand)
             {
-                await context.Channel.SendMessageAsync(result.ToString());
+                _logger.LogError(result.Error.ToString());
             }
         }
     }

@@ -37,9 +37,11 @@ namespace Bibby.Bot
             services.AddSingleton<IDiscordClient>(discordClient);
             services.AddSingleton<BaseDiscordClient>(discordClient);
             services.AddSingleton(discordClient);
-            services.AddSingleton<CommandService>();
-            services.AddHostedService<CommandHandlingService>();
 
+            services.AddSingleton<CommandService>();
+            services.AddSingleton<IMessageService, MessageService>();
+
+            services.AddHostedService<CommandHandlingService>();
             services.AddHostedService<DiscordClientLogService>();
             services.AddHostedService<DiscordLoginService>();
             services.AddHostedService<ChatService>();
