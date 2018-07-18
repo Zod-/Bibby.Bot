@@ -32,10 +32,6 @@ namespace Bibby.Bot.Services
         private async Task DiscordClientOnMessageReceived(SocketMessage socketMessage)
         {
             _logger.LogInformation(socketMessage.ToString());
-            if (socketMessage.Content.ToLower().StartsWith("!ping"))
-            {
-                await socketMessage.Channel.SendMessageAsync("Pong");
-            }
             if (socketMessage.Content.ToLower().StartsWith("!gdpr"))
             {
                 await socketMessage.Channel.SendMessageAsync("I ain't saving shit.");
