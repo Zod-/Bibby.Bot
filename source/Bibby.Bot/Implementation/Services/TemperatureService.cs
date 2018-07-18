@@ -11,10 +11,12 @@ namespace Bibby.Bot.Services
     public class TemperatureService : IHostedService
     {
         private readonly DiscordSocketClient _discordClient;
+        private readonly IMessageService _messageService;
 
-        public TemperatureService(DiscordSocketClient discordClient)
+        public TemperatureService(DiscordSocketClient discordClient, IMessageService messageService)
         {
             _discordClient = discordClient;
+            _messageService = messageService;
         }
         public Task StartAsync(CancellationToken cancellationToken)
         {
@@ -37,14 +39,9 @@ namespace Bibby.Bot.Services
 
             var text = socketMessage.Content;
             var temperatureMentions = TemperatureFinder.GetTemperatureMentions(text);
-            var outputString = string.Join(Environment.NewLine, temperatureMentions.Select(m => m.ToStringConverted()));
+            var response = string.Join(Environment.NewLine, temperatureMentions.Select(m => m.ToStringConverted()));
 
-            if (string.IsNullOrEmpty(outputString))
-            {
-                return;
-            }
-
-            await socketMessage.Channel.SendMessageAsync(outputString);
+            await _messageService.SendAsync(socketMessage.Channel, response);
         }
     }
 }
