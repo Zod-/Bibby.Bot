@@ -32,20 +32,36 @@ namespace Bibby.Bot
         {
             services.AddLogging();
             services.Configure<DiscordOptions>(Configuration.GetSection("DiscordOptions"));
+            ConfigureDiscordClient(services);
+            ConfigureCommandServices(services);
+            ConfigureCustomServices(services);
+        }
 
+        private static void ConfigureCustomServices(IServiceCollection services)
+        {
+            services.AddSingleton<IMessageService, MessageService>();
+            services.AddHostedService<TemperatureService>();
+        }
+
+        private static void ConfigureDiscordClient(IServiceCollection services)
+        {
             var discordClient = new DiscordSocketClient();
             services.AddSingleton<IDiscordClient>(discordClient);
             services.AddSingleton<BaseDiscordClient>(discordClient);
             services.AddSingleton(discordClient);
-
-            services.AddSingleton<CommandService>();
-            services.AddSingleton<IMessageService, MessageService>();
-
-            services.AddHostedService<CommandHandlingService>();
             services.AddHostedService<DiscordClientLogService>();
             services.AddHostedService<DiscordLoginService>();
-            services.AddHostedService<ChatService>();
-            services.AddHostedService<TemperatureService>();
+        }
+
+        private static void ConfigureCommandServices(IServiceCollection services)
+        {
+            var commandService = new CommandService(new CommandServiceConfig()
+            {
+                CaseSensitiveCommands = false,
+                DefaultRunMode = RunMode.Async
+            });
+            services.AddSingleton(commandService);
+            services.AddHostedService<CommandHandlingService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
