@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
@@ -6,10 +7,11 @@ namespace Bibby.Bot.Utilities.Temperature
 {
     public static class TemperatureFinder
     {
-        private const string TemperatureRegex = @"([+-]?\d+(?:[\.,]\d+)?°?[CcFfK])(?:\s|$)";
-        private const string ReplaceUnitRegex = @"°?[CcFfK]";
+        private const string UnitRegex = @"°?[CcFfK]";
+        private const string TemperatureRegex = @"^[+-]?\d+(?:[\.,]\d+)?°?[CcFfK]$";
         private static readonly CultureInfo DotCulture = CultureInfo.InvariantCulture;
         private static readonly CultureInfo CommaCulture = CultureInfo.GetCultureInfo("EN-DE");
+        private const RegexOptions RegexOpts = RegexOptions.Compiled;
 
         public static IEnumerable<TemperatureMention> GetTemperatureMentions(string text)
         {
@@ -32,8 +34,8 @@ namespace Bibby.Bot.Utilities.Temperature
 
         internal static double ParseTemperatureDegrees(string input)
         {
-            input = Regex.Replace(input, ReplaceUnitRegex, string.Empty, RegexOptions.Compiled);
-            if (double.TryParse(input,NumberStyles.Float, DotCulture,out var dotResult))
+            input = Regex.Replace(input, UnitRegex, string.Empty, RegexOpts);
+            if (double.TryParse(input, NumberStyles.Float, DotCulture, out var dotResult))
             {
                 return dotResult;
             }
@@ -63,11 +65,16 @@ namespace Bibby.Bot.Utilities.Temperature
 
         internal static IEnumerable<string> GetTemperatureRegexMatches(string input)
         {
-            var matchCollection = Regex.Matches(input, TemperatureRegex, RegexOptions.Compiled | RegexOptions.Multiline);
+            //split by whitespace
+            var splits = input.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
 
-            foreach (Match match in matchCollection)
+            foreach (var split in splits)
             {
-                yield return match.Groups[1].Value;
+                var match = Regex.Match(split, TemperatureRegex, RegexOpts);
+                if (match.Success)
+                {
+                    yield return match.Value;
+                }
             }
         }
     }
