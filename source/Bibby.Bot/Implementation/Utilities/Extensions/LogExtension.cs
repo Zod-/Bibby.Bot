@@ -1,6 +1,4 @@
-﻿
-using System;
-using Discord;
+﻿using Discord;
 using Microsoft.Extensions.Logging;
 
 namespace Bibby.Bot.Utilities.Extensions
