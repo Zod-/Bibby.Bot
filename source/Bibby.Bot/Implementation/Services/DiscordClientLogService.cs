@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Bibby.Bot.Utilities.Extensions;
 using Discord;
 using Discord.Rest;
 using Microsoft.Extensions.Hosting;
@@ -7,7 +8,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Bibby.Bot.Services
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
     public class DiscordClientLogService : IHostedService
     {
         private readonly BaseDiscordClient _discordClient;
@@ -33,7 +33,7 @@ namespace Bibby.Bot.Services
 
         private Task DiscordClientOnLog(LogMessage logMessage)
         {
-            _logger.LogInformation(logMessage.ToString());
+            _logger.Log(logMessage);
             return Task.CompletedTask;
         }
     }

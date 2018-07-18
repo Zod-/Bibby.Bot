@@ -4,6 +4,8 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Bibby.Bot.Options;
+using Bibby.Bot.Utilities.Extensions;
+using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Hosting;
@@ -18,8 +20,8 @@ namespace Bibby.Bot.Services
         private readonly DiscordSocketClient _discordClient;
         private readonly IServiceProvider _services;
         private readonly DiscordOptions _options;
+        private readonly ILogger<CommandHandlingService> _logger;
         private IEnumerable<ModuleInfo> _modules;
-        private ILogger<CommandHandlingService> _logger;
 
         public CommandHandlingService(IServiceProvider services, CommandService commandServiceService, DiscordSocketClient discordClientClient, IOptions<DiscordOptions> options, ILogger<CommandHandlingService> logger)
         {
@@ -32,12 +34,20 @@ namespace Bibby.Bot.Services
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
+            _commandService.Log += CommandServiceOnLog;
             _discordClient.MessageReceived += MessageReceivedAsync;
             _modules = await _commandService.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
         }
 
+        private Task CommandServiceOnLog(LogMessage logMessage)
+        {
+            _logger.Log(logMessage);
+            return Task.CompletedTask;
+        }
+
         public async Task StopAsync(CancellationToken cancellationToken)
         {
+            _commandService.Log -= CommandServiceOnLog;
             _discordClient.MessageReceived -= MessageReceivedAsync;
             foreach (var moduleInfo in _modules)
             {

@@ -8,7 +8,6 @@ using Microsoft.Extensions.Options;
 
 namespace Bibby.Bot.Services
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
     public class DiscordLoginService : IHostedService
     {
         private readonly BaseDiscordClient _baseClient;
