@@ -1,14 +1,18 @@
 ﻿using System.Threading.Tasks;
+using Bibby.Bot.Utilities;
 using Discord;
-using Discord.WebSocket;
 
 namespace Bibby.Bot.Services
 {
     public class MessageService : IMessageService
     {
-        public async Task<IUserMessage> SendAsync(ISocketMessageChannel channel, string response, int autoDeleteSeconds = -1)
+        public async Task<IUserMessage> SendAsync(IMessageChannel channel, string text)
         {
-            return await channel.SendMessageAsync(response);
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                return new EmptyMessage();
+            }
+            return await channel.SendMessageAsync(text);
         }
     }
 }
