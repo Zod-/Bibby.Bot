@@ -2,6 +2,7 @@
 using Bibby.Bot.Options;
 using Bibby.Bot.Services;
 using Discord;
+using Discord.Commands;
 using Discord.Rest;
 using Discord.WebSocket;
 using Microsoft.AspNetCore.Builder;
@@ -11,7 +12,6 @@ using Microsoft.Extensions.Hosting;
 
 namespace Bibby.Bot
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
     public class Startup
     {
         private IConfiguration Configuration { get; set; }
@@ -37,6 +37,8 @@ namespace Bibby.Bot
             services.AddSingleton<IDiscordClient>(discordClient);
             services.AddSingleton<BaseDiscordClient>(discordClient);
             services.AddSingleton(discordClient);
+            services.AddSingleton<CommandService>();
+            services.AddSingleton<CommandHandlingService>();
 
             services.AddHostedService<DiscordClientLogService>();
             services.AddHostedService<DiscordLoginService>();

@@ -2,24 +2,19 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Bibby.Bot.Options;
 using Bibby.Bot.Utilities.Temperature;
 using Discord.WebSocket;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 
 namespace Bibby.Bot.Services
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
     public class TemperatureService : IHostedService
     {
         private readonly DiscordSocketClient _discordClient;
-        private readonly DiscordOptions _botOptions;
 
-        public TemperatureService(DiscordSocketClient discordClient, IOptions<DiscordOptions> options)
+        public TemperatureService(DiscordSocketClient discordClient)
         {
             _discordClient = discordClient;
-            _botOptions = options.Value;
         }
         public Task StartAsync(CancellationToken cancellationToken)
         {
@@ -35,7 +30,7 @@ namespace Bibby.Bot.Services
 
         private async Task DiscordClientOnMessageReceived(SocketMessage socketMessage)
         {
-            if (socketMessage.Author.Username == _botOptions.BotName)
+            if (socketMessage.Author.Id == _discordClient.CurrentUser.Id)
             {
                 return;
             }

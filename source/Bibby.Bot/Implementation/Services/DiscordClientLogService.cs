@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Bibby.Bot.Services
 {
-    // ReSharper disable once UnusedMember.Global
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class DiscordClientLogService : IHostedService
     {
         private readonly BaseDiscordClient _discordClient;
