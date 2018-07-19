@@ -13,8 +13,9 @@ namespace Bibby.Bot.Services.Translations
     {
         private const string ApiUrl = "https://api.cognitive.microsofttranslator.com";
         private const string TranslateUrl = ApiUrl + "/translate?api-version=3.0";
-        internal const string AzureKeyNotFound = "Azure text translator key not found.";
         internal const string AzureAuthHeaderName = "Ocp-Apim-Subscription-Key";
+        internal const string AzureKeyNotFound = "Azure text translator key not found.";
+        internal const string TranslationSameAsInputError = "Translation is the same as the input.";
         private readonly AzureOptions _azureKeys;
 
         public Translator(IOptions<AzureOptions> options)
@@ -22,18 +23,46 @@ namespace Bibby.Bot.Services.Translations
             _azureKeys = options.Value;
         }
 
-        public async Task<string> DetectAndTranslateAsync(string text, params Language[] toLanguage)
+        public async Task<TranslationResponse> DetectAndTranslateAsync(string text, params Language[] toLanguage)
         {
             if (string.IsNullOrEmpty(_azureKeys.TranslatorKey))
             {
-                return await Task.FromResult(AzureKeyNotFound);
+                return await Task.FromResult(GetAzureKeyNotFoundError());
             }
 
             toLanguage = GetDefaultIfEmpty(toLanguage);
             var uri = GetUrlWithQuery(TranslateUrl, toLanguage);
             var responseBody = await GetResponseBodyAsync(text, uri);
             var result = GetTranslationFromResponseBody(responseBody);
+            if (IsSameAsInput(result, text))
+            {
+                result.Error = GetSameAsInputError();
+            }
             return result;
+        }
+
+        private static TranslationError GetSameAsInputError()
+        {
+            return new TranslationError
+            {
+                Message = TranslationSameAsInputError
+            };
+        }
+
+        private static bool IsSameAsInput(TranslationResponse response, string text)
+        {
+            return response.Translations != null && response.Translations.First().Text.Equals(text);
+        }
+
+        private static TranslationResponse GetAzureKeyNotFoundError()
+        {
+            return new TranslationResponse
+            {
+                Error = new TranslationError
+                {
+                    Message = AzureKeyNotFound
+                }
+            };
         }
 
         private async Task<string> GetResponseBodyAsync(string text, string uri)
@@ -46,7 +75,7 @@ namespace Bibby.Bot.Services.Translations
             }
         }
 
-        internal static string GetTranslationFromResponseBody(string responseBody)
+        internal static TranslationResponse GetTranslationFromResponseBody(string responseBody)
         {
             //Error comes back as a single object
             if (responseBody.StartsWith('{'))
@@ -55,11 +84,7 @@ namespace Bibby.Bot.Services.Translations
             }
 
             var result = JsonConvert.DeserializeObject<TranslationResponse[]>(responseBody).First();
-            if (result.Error != null)
-            {
-                return result.Error.Message;
-            }
-            return result.Translations.First().Text;
+            return result;
         }
 
         internal HttpRequestMessage GetTranslatorRequest(string uri, string text)

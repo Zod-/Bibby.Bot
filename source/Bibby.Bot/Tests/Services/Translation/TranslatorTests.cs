@@ -86,7 +86,7 @@ namespace Bibby.Bot.Tests.Services.Translation
         public void GetTranslationFromResponseBody()
         {
             var body = Resources.TranslationResponseError;
-            var actual = Translator.GetTranslationFromResponseBody(body);
+            var actual = Translator.GetTranslationFromResponseBody(body).Error.Message;
             Assert.AreEqual("The field Text must be a string or array type with a minimum length of '1'.", actual);
         }
 
@@ -94,7 +94,7 @@ namespace Bibby.Bot.Tests.Services.Translation
         public void GetTranslationFromResponseBodyWithError()
         {
             var body = Resources.TranslationResponse;
-            var actual = Translator.GetTranslationFromResponseBody(body);
+            var actual = Translator.GetTranslationFromResponseBody(body).Translations.First().Text;
             Assert.AreEqual("Text for translation", actual);
         }
 
@@ -106,7 +106,7 @@ namespace Bibby.Bot.Tests.Services.Translation
             var translator = new Translator(optionsMock.Object);
             var expected = Translator.AzureKeyNotFound;
             var actual = await translator.DetectAndTranslateAsync(null, null);
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expected, actual.Error.Message);
         }
 
         [TestMethod]

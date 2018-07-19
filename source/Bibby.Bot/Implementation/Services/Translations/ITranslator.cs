@@ -5,6 +5,6 @@ namespace Bibby.Bot.Services.Translations
 {
     public interface ITranslator
     {
-        Task<string> DetectAndTranslateAsync(string text, [Optional]params Language[] toLanguage);
+        Task<TranslationResponse> DetectAndTranslateAsync(string text, [Optional]params Language[] toLanguage);
     }
 }
