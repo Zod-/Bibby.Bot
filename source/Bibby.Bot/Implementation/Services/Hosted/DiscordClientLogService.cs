@@ -6,7 +6,7 @@ using Discord.Rest;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Bibby.Bot.Services
+namespace Bibby.Bot.Services.Hosted
 {
     public class DiscordClientLogService : IHostedService
     {

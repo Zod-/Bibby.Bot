@@ -6,7 +6,7 @@ using Bibby.Bot.Utilities.Temperature;
 using Discord.WebSocket;
 using Microsoft.Extensions.Hosting;
 
-namespace Bibby.Bot.Services
+namespace Bibby.Bot.Services.Hosted
 {
     public class TemperatureService : IHostedService
     {
