@@ -1,23 +1,24 @@
-﻿
-using Bibby.Bot.Utilities.Extensions;
+﻿using Bibby.Bot.Utilities.Extensions;
 using Discord;
 using Microsoft.Extensions.Logging;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Bibby.Bot.Tests.Utilities.Extensions
 {
+    [TestClass]
     public class LogLevelExtensions
     {
-        [TestCase(LogLevel.Error, LogSeverity.Error)]
-        [TestCase(LogLevel.Critical, LogSeverity.Critical)]
-        [TestCase(LogLevel.Trace, LogSeverity.Verbose)]
-        [TestCase(LogLevel.Information, LogSeverity.Info)]
-        [TestCase(LogLevel.Warning, LogSeverity.Warning)]
-        [TestCase(LogLevel.Debug, LogSeverity.Debug)]
+        [TestMethod]
+        [DataRow(LogLevel.Error, LogSeverity.Error)]
+        [DataRow(LogLevel.Critical, LogSeverity.Critical)]
+        [DataRow(LogLevel.Trace, LogSeverity.Verbose)]
+        [DataRow(LogLevel.Information, LogSeverity.Info)]
+        [DataRow(LogLevel.Warning, LogSeverity.Warning)]
+        [DataRow(LogLevel.Debug, LogSeverity.Debug)]
         public void ConvertLoglevelTests(LogLevel expected, LogSeverity input)
         {
             var actual = input.ToLogLevel();
-            Assert.That(actual, Is.EqualTo(expected));
+            Assert.AreEqual(expected, actual);
         }
     }
 }
