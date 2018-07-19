@@ -25,8 +25,6 @@ namespace Bibby.Bot.Modules
             {
                 await ResponsWithTranslation(response);
             }
-
-            //await MessageService.SendAsync(Context.Channel, response);
         }
 
         private async Task ResponsWithTranslation(TranslationResponse response)
