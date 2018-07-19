@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Bibby.Bot.Utilities.Temperature;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
