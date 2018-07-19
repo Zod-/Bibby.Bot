@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Bibby.Bot.Services;
 using Bibby.Bot.Services.Translations;
 using Discord.Commands;
@@ -16,7 +17,41 @@ namespace Bibby.Bot.Modules
         {
             var text = string.Join(" ", words);
             var response = await Translator.DetectAndTranslateAsync(text);
-            await MessageService.SendAsync(Context.Channel, response);
+            if (response.Error != null)
+            {
+                await RespondWithError(response);
+            }
+            else
+            {
+                await ResponsWithTranslation(response);
+            }
+
+            //await MessageService.SendAsync(Context.Channel, response);
+        }
+
+        private async Task ResponsWithTranslation(TranslationResponse response)
+        {
+            var text = response.Translations.First().Text;
+            await MessageService.SendAsync(Context.Channel, text);
+        }
+
+        private async Task RespondWithError(TranslationResponse response)
+        {
+            var errorText = $"**Error**: {response.Error.Message}";
+            var deletingProgress = "\nDeleting message and command";
+            var message = await MessageService.SendAsync(Context.Channel, errorText + deletingProgress);
+
+            for (var i = 0; i < 5; i++)
+            {
+                deletingProgress += ".";
+                var text = errorText + deletingProgress;
+                await message.ModifyAsync(p => p.Content = text);
+                await Task.Delay(1000);
+            }
+
+            var deleteMessage = message.DeleteAsync();
+            var deleteContext = Context.Message.DeleteAsync();
+            Task.WaitAll(deleteMessage, deleteContext);
         }
     }
 }
