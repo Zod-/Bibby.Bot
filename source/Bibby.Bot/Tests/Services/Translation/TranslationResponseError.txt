@@ -1,0 +1,6 @@
+{
+    "error": {
+        "code": 400005,
+        "message": "The field Text must be a string or array type with a minimum length of '1'."
+    }
+}

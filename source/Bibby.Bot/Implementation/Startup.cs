@@ -1,6 +1,8 @@
 ﻿using System.IO;
 using Bibby.Bot.Options;
 using Bibby.Bot.Services;
+using Bibby.Bot.Services.Hosted;
+using Bibby.Bot.Services.Translations;
 using Discord;
 using Discord.Commands;
 using Discord.Rest;
@@ -31,15 +33,22 @@ namespace Bibby.Bot
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddLogging();
-            services.Configure<DiscordOptions>(Configuration.GetSection("DiscordOptions"));
+            ConfigureOptions(services);
             ConfigureDiscordClient(services);
             ConfigureCommandServices(services);
             ConfigureCustomServices(services);
         }
 
+        private void ConfigureOptions(IServiceCollection services)
+        {
+            services.Configure<DiscordOptions>(Configuration.GetSection("DiscordOptions"));
+            services.Configure<AzureOptions>(Configuration.GetSection("AzureOptions"));
+        }
+
         private static void ConfigureCustomServices(IServiceCollection services)
         {
             services.AddSingleton<IMessageService, MessageService>();
+            services.AddSingleton<ITranslator, Translator>();
             services.AddHostedService<TemperatureService>();
         }
 

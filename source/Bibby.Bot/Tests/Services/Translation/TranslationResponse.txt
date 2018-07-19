@@ -1,0 +1,18 @@
+[
+    {
+        "detectedLanguage": {
+            "language": "de",
+            "score": 1
+        },
+        "translations": [
+            {
+                "text": "Text for translation",
+                "to": "en"
+            },
+            {
+                "text": "bIngDaq ghItlh leghlu' mughmeH",
+                "to": "tlh"
+            }
+        ]
+    }
+]
