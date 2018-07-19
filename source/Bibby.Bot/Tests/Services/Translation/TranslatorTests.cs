@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -6,7 +6,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Bibby.Bot.Options;
 using Bibby.Bot.Services.Translations;
-using Bibby.Bot.Tests.Properties;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -76,25 +75,30 @@ namespace Bibby.Bot.Tests.Services.Translation
         public async Task GetStringContentBodyTest()
         {
             var text = "Übersetzung";
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Services\\Translation\\TranslationRequest.txt");
+            var fileContent = File.ReadAllText(filePath, Encoding.UTF8);
+            var expected = Regex.Replace(fileContent, @"\s+", string.Empty);
             var stringContent = Translator.GetStringContent(text);
+
             var actual = await stringContent.ReadAsStringAsync();
-            var expected = Regex.Replace(Resources.TranslationRequest, @"\s+", string.Empty);
             Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
         public void GetTranslationFromResponseBody()
         {
-            var body = Resources.TranslationResponseError;
-            var actual = Translator.GetTranslationFromResponseBody(body).Error.Message;
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Services\\Translation\\TranslationResponseError.txt");
+            var fileContent = File.ReadAllText(filePath, Encoding.UTF8);
+            var actual = Translator.GetTranslationFromResponseBody(fileContent).Error.Message;
             Assert.AreEqual("The field Text must be a string or array type with a minimum length of '1'.", actual);
         }
 
         [TestMethod]
         public void GetTranslationFromResponseBodyWithError()
         {
-            var body = Resources.TranslationResponse;
-            var actual = Translator.GetTranslationFromResponseBody(body).Translations.First().Text;
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Services\\Translation\\TranslationResponse.txt");
+            var fileContent = File.ReadAllText(filePath, Encoding.UTF8);
+            var actual = Translator.GetTranslationFromResponseBody(fileContent).Translations.First().Text;
             Assert.AreEqual("Text for translation", actual);
         }
 

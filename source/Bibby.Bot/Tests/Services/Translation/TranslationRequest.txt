@@ -1,5 +1,5 @@
 [
 	{
-		"Text": "Übersetzung"
+		"Text": "Ãœbersetzung"
 	}
 ]
