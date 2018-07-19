@@ -11,7 +11,10 @@ namespace Bibby.Bot.Services
         [Command("gdpr")]
         public async Task RunAsync()
         {
-            await MessageService.SendAsync(Context.Channel, "I ain't saving shit.").DeleteAfterSeconds(15);
+            var message = await MessageService.SendAsync(Context.Channel, "I ain't saving shit.");
+            var deleteResponse = message.DeleteAfterSeconds(15);
+            var deleteContext = Context.Message.DeleteAfterSeconds(15);
+            Task.WaitAll(deleteContext, deleteResponse);
         }
     }
 }
