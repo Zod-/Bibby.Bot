@@ -14,8 +14,8 @@ namespace Bibby.Bot.Modules
             var message = await MessageService.SendAsync(Context.Channel, response);
             var time = message.Timestamp.Subtract(Context.Message.Timestamp);
             await message.ModifyAsync(m => m.Content = $"{response} (**{time.TotalMilliseconds}** *ms*)");
-            var deleteCallerTask = Context.Message.DeleteAfterSeconds(30);
-            var deleteMessageTask = message.DeleteAfterSeconds(30);
+            var deleteCallerTask = Context.Message.DeleteAfterSeconds(7.5);
+            var deleteMessageTask = message.DeleteAfterSeconds(7.5);
             Task.WaitAll(deleteMessageTask, deleteCallerTask);
         }
 
