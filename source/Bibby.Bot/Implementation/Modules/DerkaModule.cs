@@ -38,7 +38,6 @@ namespace Bibby.Bot.Modules
             var errorText = $"**Error**: {response.Error.Message}";
             var deletingProgress = "\nDeleting message and command";
             var message = await MessageService.SendAsync(Context.Channel, errorText + deletingProgress);
-
             for (var i = 0; i < 5; i++)
             {
                 deletingProgress += ".";
