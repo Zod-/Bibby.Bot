@@ -45,7 +45,7 @@ namespace Bibby.Bot
         {
             services.Configure<DiscordOptions>(Configuration.GetSection("DiscordOptions"));
             services.Configure<AzureOptions>(Configuration.GetSection("AzureOptions"));
-            services.Configure<TtsLanguages>(Configuration.GetSection("Languages"));
+            services.Configure<TtsLanguages>(Configuration.GetSection("TtsLanguages"));
         }
 
         private static void ConfigureCustomServices(IServiceCollection services)
