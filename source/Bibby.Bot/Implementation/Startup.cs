@@ -3,6 +3,7 @@ using Bibby.Bot.Options;
 using Bibby.Bot.Services;
 using Bibby.Bot.Services.Hosted;
 using Bibby.Bot.Services.Translations;
+using Bibby.Bot.Services.TTS;
 using Discord;
 using Discord.Commands;
 using Discord.Rest;
@@ -26,6 +27,7 @@ namespace Bibby.Bot
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
                 .AddJsonFile("secrets.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"secrets.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("tts-languages.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables()
                 .Build();
         }
@@ -43,12 +45,15 @@ namespace Bibby.Bot
         {
             services.Configure<DiscordOptions>(Configuration.GetSection("DiscordOptions"));
             services.Configure<AzureOptions>(Configuration.GetSection("AzureOptions"));
+            services.Configure<TtsLanguages>(Configuration.GetSection("Languages"));
         }
 
         private static void ConfigureCustomServices(IServiceCollection services)
         {
             services.AddSingleton<IMessageService, MessageService>();
             services.AddSingleton<ITranslator, Translator>();
+            services.AddSingleton<ITextToSpeech, TextToSpeech>();
+            services.AddSingleton<LanguageSelection>();
             services.AddHostedService<TemperatureService>();
         }
 
