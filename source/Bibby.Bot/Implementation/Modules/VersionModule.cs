@@ -14,7 +14,7 @@ namespace Bibby.Bot.Modules
         [Alias("v")]
         public async Task RunAsync()
         {
-            var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            var version = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
             var message = await MessageService.SendAsync(Context.Channel, version);
 
             var deleteContext = Context.Message.DeleteAfterSeconds(7.5);
