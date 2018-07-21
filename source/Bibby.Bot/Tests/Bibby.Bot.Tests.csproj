@@ -11,6 +11,8 @@
 
     <StartupObject />
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <Version Condition=" '$(BUILD_BUILDNUMBER)' == '' ">0.0.0.1-local</Version>
+    <Version Condition=" '$(BUILD_BUILDNUMBER)' != '' ">$(BUILD_BUILDNUMBER)</Version>
     <Authors>Julian Hangstörfer</Authors>
     <Company>Bibby</Company>
     <Copyright>Copyright (c) 2018 Julian Hangstörfer</Copyright>
