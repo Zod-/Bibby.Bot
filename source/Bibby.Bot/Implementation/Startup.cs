@@ -65,6 +65,7 @@ namespace Bibby.Bot
             services.AddSingleton(discordClient);
             services.AddHostedService<DiscordClientLogService>();
             services.AddHostedService<DiscordLoginService>();
+            services.AddHostedService<PlayingStatusService>();
         }
 
         private static void ConfigureCommandServices(IServiceCollection services)
