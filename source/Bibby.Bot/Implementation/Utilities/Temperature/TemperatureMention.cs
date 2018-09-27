@@ -53,7 +53,7 @@
             var ret = string.Empty;
             var convertedCelsius = TemperatureConverter.FahrenheitToCelsius(Degrees);
             ret += TemperatureFormat.CelsiusToString(convertedCelsius);
-            var kelvin2 = TemperatureConverter.CelsiusToKelvin(Degrees);
+            var kelvin2 = TemperatureConverter.FahrenheitToKelvin(Degrees);
             ret += ", " + TemperatureFormat.KelvinToSunSurfacePercentage(kelvin2);
             return ret;
         }
