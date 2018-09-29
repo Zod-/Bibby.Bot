@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\" />
+    <PackageReference Include="UnitsNet" Version="3.105.0" />
   </ItemGroup>
 
 </Project>

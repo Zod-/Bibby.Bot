@@ -1,22 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Bibby.Bot.Utilities.Temperature;
+using Bibby.UnitConversion.Contracts;
 using Discord.WebSocket;
 using Microsoft.Extensions.Hosting;
+using UnitsNet;
 
 namespace Bibby.Bot.Services.Hosted
 {
-    public class TemperatureService : IHostedService
+    public class ConverterService : IHostedService
     {
         private readonly DiscordSocketClient _discordClient;
         private readonly IMessageService _messageService;
+        private readonly IReadOnlyList<IConvertUnits> _converters;
 
-        public TemperatureService(DiscordSocketClient discordClient, IMessageService messageService)
+        public ConverterService(DiscordSocketClient discordClient, IMessageService messageService, IEnumerable<IConvertUnits> converters)
         {
             _discordClient = discordClient;
             _messageService = messageService;
+            _converters = converters.ToList();
         }
         public Task StartAsync(CancellationToken cancellationToken)
         {
@@ -38,9 +42,8 @@ namespace Bibby.Bot.Services.Hosted
             }
 
             var text = socketMessage.Content;
-            var temperatureMentions = TemperatureFinder.GetTemperatureMentions(text);
-            var response = string.Join(Environment.NewLine, temperatureMentions.Select(m => m.ToStringConverted()));
-
+            var conversions = _converters.SelectMany(converter => converter.ConvertUnits(text));
+            var response = conversions.Aggregate(string.Empty, (current, valueTuple) => current + $"{valueTuple.unit} == {valueTuple.converted}\n");
             await _messageService.SendAsync(socketMessage.Channel, response);
         }
     }
