@@ -7,16 +7,9 @@ using UnitsNet.Units;
 
 namespace Bibby.UnitConversion.Converters
 {
-    public class LengthConverter : IConvertUnits
+    public class LengthConverter : BaseConverter<Length>
     {
-        public IEnumerable<(string unit, IQuantity converted)> ConvertUnits(string input)
-        {
-            var foundUnits = FindLengths(input);
-            var ret = ConvertLengths(foundUnits);
-            return ret;
-        }
-
-        private IEnumerable<(string unit, IQuantity converted)> ConvertLengths(IEnumerable<(string input, Length length)> foundUnits)
+        protected override IEnumerable<(string unit, IQuantity converted)> ConvertUnits(IEnumerable<(string input, Length foundUnit)> foundUnits)
         {
             foreach (var (unit, length) in foundUnits)
             {
@@ -80,17 +73,9 @@ namespace Bibby.UnitConversion.Converters
             }
         }
 
-        private static IEnumerable<(string input, Length length)> FindLengths(string input)
+        protected override bool TryParse(string split, out Length foundUnit)
         {
-            var splits = input.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (var split in splits)
-            {
-                if (Length.TryParse(split, out var length))
-                {
-                    yield return (split, length);
-                }
-            }
+            return Length.TryParse(split, out foundUnit);
         }
     }
 }

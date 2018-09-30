@@ -8,7 +8,7 @@ using UnitsNet.Units;
 
 namespace Bibby.UnitConversion.Converters
 {
-    public class TemperatureConverter : IConvertUnits
+    public class TemperatureConverter : BaseConverter<Temperature>
     {
         private const string UnitRegex = @"°?[CcFfK]";
         private const string TemperatureRegex = @"^[+-]?\d+(?:[\.,]\d+)?°?[CcFfK]$";
@@ -16,58 +16,48 @@ namespace Bibby.UnitConversion.Converters
         private static readonly CultureInfo CommaCulture = CultureInfo.GetCultureInfo("EN-DE");
         private const RegexOptions RegexOpts = RegexOptions.Compiled;
 
-        public IEnumerable<(string unit, IQuantity converted)> ConvertUnits(string input)
+        protected override IEnumerable<(string unit, IQuantity converted)> ConvertUnits(IEnumerable<(string input, Temperature foundUnit)> foundUnits)
         {
-            var foundUnits = FindTemperatures(input);
-            var ret = ConvertTemperatures(foundUnits);
-            return ret;
-        }
-
-        private static IEnumerable<(string unit, IQuantity converted)> ConvertTemperatures(IEnumerable<(string unit, Temperature temperature)> foundUnits)
-        {
-            foreach (var (unit, temperature) in foundUnits)
+            foreach (var (unit, foundUnit) in foundUnits)
             {
-                switch (temperature.Unit)
+                foreach (var conversionUnit in ConversionUnitMapping(foundUnit.Unit))
                 {
-                    case TemperatureUnit.Undefined:
-                        break;
-                    case TemperatureUnit.DegreeCelsius:
-                        yield return (unit, temperature.ToUnit(TemperatureUnit.DegreeFahrenheit));
-                        break;
-                    case TemperatureUnit.DegreeFahrenheit:
-                        yield return (unit, temperature.ToUnit(TemperatureUnit.DegreeCelsius));
-                        break;
-                    case TemperatureUnit.DegreeDelisle:
-                    case TemperatureUnit.DegreeNewton:
-                    case TemperatureUnit.DegreeRankine:
-                    case TemperatureUnit.DegreeReaumur:
-                    case TemperatureUnit.DegreeRoemer:
-                    case TemperatureUnit.Kelvin:
-                        yield return (unit, temperature.ToUnit(TemperatureUnit.DegreeCelsius));
-                        yield return (unit, temperature.ToUnit(TemperatureUnit.DegreeFahrenheit));
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
+                    yield return (unit, foundUnit.ToUnit(conversionUnit));
                 }
             }
         }
 
-        private static IEnumerable<(string unit, Temperature temperature)> FindTemperatures(string message)
+        private static IEnumerable<TemperatureUnit> ConversionUnitMapping(TemperatureUnit unit)
         {
-            var splits = message.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (var split in splits)
+            switch (unit)
             {
-                if (Temperature.TryParse(split, out var temperature))
-                {
-                    yield return (split, temperature);
-                }
-                else if(TryParseWithoutDegree(split, out temperature))
-                {
-                    yield return (split, temperature);
-                }
+                case TemperatureUnit.Undefined:
+                    break;
+                case TemperatureUnit.DegreeCelsius:
+                    yield return TemperatureUnit.DegreeFahrenheit;
+                    break;
+                case TemperatureUnit.DegreeFahrenheit:
+                    yield return TemperatureUnit.DegreeCelsius;
+                    break;
+                case TemperatureUnit.DegreeDelisle:
+                case TemperatureUnit.DegreeNewton:
+                case TemperatureUnit.DegreeRankine:
+                case TemperatureUnit.DegreeReaumur:
+                case TemperatureUnit.DegreeRoemer:
+                case TemperatureUnit.Kelvin:
+                    yield return TemperatureUnit.DegreeCelsius;
+                    yield return TemperatureUnit.DegreeFahrenheit;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
+
+        protected override bool TryParse(string split, out Temperature foundUnit)
+        {
+            return Temperature.TryParse(split, out foundUnit) || TryParseWithoutDegree(split, out foundUnit);
+        }
+
         internal static double ParseTemperatureValue(string input)
         {
             input = Regex.Replace(input, UnitRegex, string.Empty, RegexOpts);
