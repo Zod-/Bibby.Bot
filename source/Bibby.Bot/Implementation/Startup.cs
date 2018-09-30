@@ -64,6 +64,7 @@ namespace Bibby.Bot
         {
             services.AddTransient<IConvertUnits, TemperatureConverter>();
             services.AddTransient<IConvertUnits, LengthConverter>();
+            services.AddTransient<IConvertUnits, SpeedConverter>();
         }
 
         private static void ConfigureDiscordClient(IServiceCollection services)
