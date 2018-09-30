@@ -4,6 +4,8 @@ using Bibby.Bot.Services;
 using Bibby.Bot.Services.Hosted;
 using Bibby.Bot.Services.Translations;
 using Bibby.Bot.Services.TTS;
+using Bibby.UnitConversion.Contracts;
+using Bibby.UnitConversion.Converters;
 using Discord;
 using Discord.Commands;
 using Discord.Rest;
@@ -39,6 +41,7 @@ namespace Bibby.Bot
             ConfigureDiscordClient(services);
             ConfigureCommandServices(services);
             ConfigureCustomServices(services);
+            ConfigureConverters(services);
         }
 
         private void ConfigureOptions(IServiceCollection services)
@@ -54,7 +57,14 @@ namespace Bibby.Bot
             services.AddSingleton<ITranslator, Translator>();
             services.AddSingleton<ITextToSpeech, TextToSpeech>();
             services.AddSingleton<LanguageSelection>();
-            services.AddHostedService<TemperatureService>();
+            services.AddHostedService<ConverterService>();
+        }
+
+        private static void ConfigureConverters(IServiceCollection services)
+        {
+            services.AddTransient<IConvertUnits, TemperatureConverter>();
+            services.AddTransient<IConvertUnits, LengthConverter>();
+            services.AddTransient<IConvertUnits, SpeedConverter>();
         }
 
         private static void ConfigureDiscordClient(IServiceCollection services)

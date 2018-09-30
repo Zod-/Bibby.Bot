@@ -12,6 +12,7 @@
     <PackageProjectUrl>https://github.com/Zod-/Bibby.Bot</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Zod-/Bibby.Bot</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <Version>0.0.0.1-local</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,6 +40,10 @@
   <ItemGroup>
     <Folder Include="3rd Party\" />
     <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Bibby.UnitConversion\Implementation\Bibby.UnitConversion.csproj" />
   </ItemGroup>
 
   <ItemGroup>

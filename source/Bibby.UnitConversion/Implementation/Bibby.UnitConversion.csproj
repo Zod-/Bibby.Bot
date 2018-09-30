@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <Version Condition=" '$(BUILD_BUILDNUMBER)' == '' ">0.0.0.1-local</Version>
+    <Version Condition=" '$(BUILD_BUILDNUMBER)' != '' ">$(BUILD_BUILDNUMBER)</Version>
+    <Authors>Julian Hangstörfer</Authors>
+    <Company>Bibby</Company>
+    <PackageLicenseUrl>https://github.com/Zod-/Bibby.Bot/blob/master/LICENSE</PackageLicenseUrl>
+    <Copyright>Copyright (c) 2018 Julian Hangstörfer</Copyright>
+    <PackageProjectUrl>https://github.com/Zod-/Bibby.Bot</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Zod-/Bibby.Bot</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Version>0.0.0.1-local</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="UnitsNet" Version="3.105.0" />
+  </ItemGroup>
+
+</Project>

@@ -1,7 +1,8 @@
-﻿using Bibby.Bot.Utilities.Temperature;
+﻿using Bibby.UnitConversion.Converters;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using UnitsNet.Units;
 
-namespace Bibby.Bot.Tests.Utilities.Temperature
+namespace Bibby.UnitConversion.Tests.Temperature
 {
     [TestClass]
     public class TemperatureFinderParserTests
@@ -35,28 +36,28 @@ namespace Bibby.Bot.Tests.Utilities.Temperature
         [DataRow("1000000°K", 1000000f)]
         public void GetTemperatureCelsiusRegexMentionsTest(string input, float expected)
         {
-            var actual = TemperatureFinder.ParseTemperatureDegrees(input);
+            var actual = TemperatureConverter.ParseTemperatureValue(input);
             Assert.AreEqual(expected, actual, double.Epsilon);
         }
 
         [TestMethod]
-        [DataRow("0°C", TemperatureUnit.Celsius)]
-        [DataRow("30C", TemperatureUnit.Celsius)]
-        [DataRow("30.0°C", TemperatureUnit.Celsius)]
-        [DataRow("30,0°C", TemperatureUnit.Celsius)]
-        [DataRow("-30,5°C", TemperatureUnit.Celsius)]
-        [DataRow("30°F", TemperatureUnit.Fahrenheit)]
-        [DataRow("30F", TemperatureUnit.Fahrenheit)]
-        [DataRow("30.0°F", TemperatureUnit.Fahrenheit)]
-        [DataRow("30,0°F", TemperatureUnit.Fahrenheit)]
-        [DataRow("-30,5°F", TemperatureUnit.Fahrenheit)]
+        [DataRow("0°C", TemperatureUnit.DegreeCelsius)]
+        [DataRow("30C", TemperatureUnit.DegreeCelsius)]
+        [DataRow("30.0°C", TemperatureUnit.DegreeCelsius)]
+        [DataRow("30,0°C", TemperatureUnit.DegreeCelsius)]
+        [DataRow("-30,5°C", TemperatureUnit.DegreeCelsius)]
+        [DataRow("30°F", TemperatureUnit.DegreeFahrenheit)]
+        [DataRow("30F", TemperatureUnit.DegreeFahrenheit)]
+        [DataRow("30.0°F", TemperatureUnit.DegreeFahrenheit)]
+        [DataRow("30,0°F", TemperatureUnit.DegreeFahrenheit)]
+        [DataRow("-30,5°F", TemperatureUnit.DegreeFahrenheit)]
         [DataRow("30°K", TemperatureUnit.Kelvin)]
         [DataRow("30.0°K", TemperatureUnit.Kelvin)]
         [DataRow("30,0°K", TemperatureUnit.Kelvin)]
         [DataRow("-30,5°K", TemperatureUnit.Kelvin)]
         public void ParseTemperatureUnitTest(string input, TemperatureUnit expected)
         {
-            var actual = TemperatureFinder.ParseTemperatureUnit(input);
+            var actual = TemperatureConverter.ParseTemperatureUnit(input);
             Assert.AreEqual(expected, actual);
         }
     }
