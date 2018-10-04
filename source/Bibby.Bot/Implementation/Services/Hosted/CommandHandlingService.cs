@@ -8,12 +8,14 @@ using Bibby.Bot.Utilities.Extensions;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Bibby.Bot.Services.Hosted
 {
+    [UsedImplicitly]
     public class CommandHandlingService : IHostedService
     {
         private readonly CommandService _commandService;

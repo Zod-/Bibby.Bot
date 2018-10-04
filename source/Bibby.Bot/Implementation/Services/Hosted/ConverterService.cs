@@ -4,10 +4,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Bibby.UnitConversion.Contracts;
 using Discord.WebSocket;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Hosting;
 
 namespace Bibby.Bot.Services.Hosted
 {
+    [UsedImplicitly]
     public class ConverterService : IHostedService
     {
         private readonly DiscordSocketClient _discordClient;

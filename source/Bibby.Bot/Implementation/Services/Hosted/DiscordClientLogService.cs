@@ -3,11 +3,13 @@ using System.Threading.Tasks;
 using Bibby.Bot.Utilities.Extensions;
 using Discord;
 using Discord.Rest;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace Bibby.Bot.Services.Hosted
 {
+    [UsedImplicitly]
     public class DiscordClientLogService : IHostedService
     {
         private readonly BaseDiscordClient _discordClient;

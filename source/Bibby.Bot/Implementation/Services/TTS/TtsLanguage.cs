@@ -1,5 +1,8 @@
-﻿namespace Bibby.Bot.Services.TTS
+﻿using JetBrains.Annotations;
+
+namespace Bibby.Bot.Services.TTS
 {
+    [UsedImplicitly]
     public class TtsLanguage
     {
         public string Locale { get; set; }
