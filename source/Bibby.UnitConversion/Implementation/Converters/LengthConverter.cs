@@ -32,8 +32,6 @@ namespace Bibby.UnitConversion.Converters
                     yield return LengthUnit.Inch;
                     break;
                 case LengthUnit.Inch:
-                    yield return LengthUnit.Centimeter;
-                    break;
                 case LengthUnit.Foot:
                     yield return LengthUnit.Centimeter;
                     break;
