@@ -32,8 +32,14 @@ namespace Bibby.UnitConversion.Converters
                     yield return LengthUnit.Inch;
                     break;
                 case LengthUnit.Inch:
-                case LengthUnit.Foot:
                     yield return LengthUnit.Centimeter;
+                    break;
+                case LengthUnit.Meter:
+                    yield return LengthUnit.Foot;
+                    break;
+                case LengthUnit.Yard:
+                case LengthUnit.Foot:
+                    yield return LengthUnit.Meter;
                     break;
                 case LengthUnit.Kilometer:
                     yield return LengthUnit.Mile;
@@ -46,12 +52,6 @@ namespace Bibby.UnitConversion.Converters
                 case LengthUnit.Micrometer:
                     yield return LengthUnit.Inch;
                     yield return LengthUnit.Millimeter;
-                    break;
-                case LengthUnit.Yard:
-                    yield return LengthUnit.Meter;
-                    break;
-                case LengthUnit.Meter:
-                    yield return LengthUnit.Yard;
                     break;
                 case LengthUnit.DtpPica:
                 case LengthUnit.DtpPoint:
