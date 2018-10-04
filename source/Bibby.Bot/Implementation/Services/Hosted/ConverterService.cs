@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Bibby.UnitConversion.Contracts;
 using Discord.WebSocket;
 using Microsoft.Extensions.Hosting;
-using UnitsNet;
 
 namespace Bibby.Bot.Services.Hosted
 {
@@ -22,6 +21,7 @@ namespace Bibby.Bot.Services.Hosted
             _messageService = messageService;
             _converters = converters.ToList();
         }
+
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _discordClient.MessageReceived += DiscordClientOnMessageReceived;
