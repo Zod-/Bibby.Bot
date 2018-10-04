@@ -10,7 +10,6 @@ using Discord;
 using Discord.Commands;
 using Discord.Rest;
 using Discord.WebSocket;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -87,10 +86,6 @@ namespace Bibby.Bot
             });
             services.AddSingleton(commandService);
             services.AddHostedService<CommandHandlingService>();
-        }
-
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
         }
     }
 }
