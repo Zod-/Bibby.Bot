@@ -6,5 +6,6 @@ namespace Bibby.Bot.Services
     public interface IMessageService
     {
         Task<IUserMessage> SendAsync(IMessageChannel channel, string text);
+        Task<IUserMessage> SendAsync(IMessageChannel channel, Embed embed);
     }
 }
