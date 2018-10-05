@@ -13,7 +13,7 @@ namespace Bibby.Bot.Services.Hosted
     public class DiscordClientLogService : IHostedService
     {
         private readonly BaseDiscordClient _discordClient;
-        private readonly ILogger _logger;
+        private readonly ILogger<DiscordClientLogService> _logger;
 
         public DiscordClientLogService(BaseDiscordClient discordClient, ILogger<DiscordClientLogService> logger)
         {

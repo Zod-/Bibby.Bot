@@ -80,12 +80,12 @@ namespace Bibby.Bot
 
         private static void ConfigureCommandServices(IServiceCollection services)
         {
-            var commandService = new CommandService(new CommandServiceConfig()
+            services.AddSingleton(new CommandServiceConfig
             {
                 CaseSensitiveCommands = false,
                 DefaultRunMode = RunMode.Async
             });
-            services.AddSingleton(commandService);
+            services.AddSingleton<CommandService>();
             services.AddHostedService<CommandHandlingService>();
         }
 
