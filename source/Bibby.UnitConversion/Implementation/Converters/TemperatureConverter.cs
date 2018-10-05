@@ -10,7 +10,7 @@ namespace Bibby.UnitConversion.Converters
     public class TemperatureConverter : BaseConverter<Temperature>
     {
         private const string UnitRegex = @"°?[CcFfK]";
-        private const string TemperatureRegex = @"^[+-]?\d+(?:[\.,]\d+)?°?[CcFfK]$";
+        private const string TemperatureRegex = @"^[+-]?\d+(?:[\.,]\d+)?\s?°?[CcFfK]$";
         private static readonly CultureInfo DotCulture = CultureInfo.InvariantCulture;
         private static readonly CultureInfo CommaCulture = CultureInfo.GetCultureInfo("EN-DE");
         private const RegexOptions RegexOpts = RegexOptions.Compiled;

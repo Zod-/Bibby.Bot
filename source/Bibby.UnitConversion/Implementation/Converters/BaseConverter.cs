@@ -22,13 +22,18 @@ namespace Bibby.UnitConversion.Converters
         private IEnumerable<TUnit> FindUnits(string input)
         {
             var splits = input.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
-
+            var lastSplit = string.Empty;
             foreach (var split in splits)
             {
                 if (TryParse(split, out var found))
                 {
                     yield return found;
                 }
+                else if (TryParse($"{lastSplit} {split}", out found))
+                {
+                    yield return found;
+                }
+                lastSplit = split;
             }
         }
     }
