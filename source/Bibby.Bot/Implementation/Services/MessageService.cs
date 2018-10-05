@@ -14,5 +14,10 @@ namespace Bibby.Bot.Services
             }
             return await channel.SendMessageAsync(text);
         }
+
+        public async Task<IUserMessage> SendAsync(IMessageChannel channel, Embed embed)
+        {
+            return await channel.SendMessageAsync(embed:embed);
+        }
     }
 }

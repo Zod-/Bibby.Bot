@@ -5,6 +5,6 @@ namespace Bibby.UnitConversion.Contracts
 {
     public interface IConvertUnits
     {
-        IEnumerable<(string unit, IQuantity converted)> ConvertUnits(string input);
+        IEnumerable<(IQuantity unit, IQuantity converted)> ConvertUnits(string input);
     }
 }

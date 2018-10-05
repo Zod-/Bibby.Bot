@@ -1,7 +1,5 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Bibby.UnitConversion.Contracts;
 using UnitsNet;
 using UnitsNet.Units;
 
@@ -9,13 +7,13 @@ namespace Bibby.UnitConversion.Converters
 {
     public class LengthConverter : BaseConverter<Length>
     {
-        protected override IEnumerable<(string unit, IQuantity converted)> ConvertUnits(IEnumerable<(string input, Length foundUnit)> foundUnits)
+        protected override IEnumerable<(IQuantity unit, IQuantity converted)> ConvertUnits(IEnumerable<Length> foundUnits)
         {
-            foreach (var (unit, length) in foundUnits)
+            foreach (var foundUnit in foundUnits)
             {
-                foreach (var conversionUnit in ConversionUnitMapping(length.Unit))
+                foreach (var conversionUnit in ConversionUnitMapping(foundUnit.Unit))
                 {
-                    yield return (unit, length.ToUnit(conversionUnit));
+                    yield return (foundUnit, foundUnit.ToUnit(conversionUnit));
                 }
             }
         }

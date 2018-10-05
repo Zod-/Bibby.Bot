@@ -1,14 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Bibby.UnitConversion.Contracts;
+using Discord;
 using Discord.WebSocket;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Hosting;
 
 namespace Bibby.Bot.Services.Hosted
 {
+    [UsedImplicitly]
     public class ConverterService : IHostedService
     {
         private readonly DiscordSocketClient _discordClient;
@@ -43,8 +45,15 @@ namespace Bibby.Bot.Services.Hosted
 
             var text = socketMessage.Content;
             var conversions = _converters.SelectMany(converter => converter.ConvertUnits(text));
-            var response = conversions.Aggregate(string.Empty, (current, valueTuple) => current + $"{valueTuple.unit} == {valueTuple.converted}\n");
-            await _messageService.SendAsync(socketMessage.Channel, response);
+            var response = conversions.Aggregate(string.Empty, (current, valueTuple) => current + $"{valueTuple.unit} is {valueTuple.converted}\n");
+            if (!string.IsNullOrEmpty(response))
+            {
+                var embed = new EmbedBuilder()
+                    .WithColor(Color.DarkOrange)
+                    .AddField("Conversions", response)
+                    .Build();
+                await _messageService.SendAsync(socketMessage.Channel, embed);
+            }
         }
     }
 }

@@ -3,9 +3,11 @@ using Discord.WebSocket;
 using Microsoft.Extensions.Hosting;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace Bibby.Bot.Services.Hosted
 {
+    [UsedImplicitly]
     public class PlayingStatusService : IHostedService
     {
         private readonly DiscordSocketClient _discordClient;

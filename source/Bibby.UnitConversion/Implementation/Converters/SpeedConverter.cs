@@ -7,13 +7,13 @@ namespace Bibby.UnitConversion.Converters
 {
     public class SpeedConverter : BaseConverter<Speed>
     {
-        protected override IEnumerable<(string unit, IQuantity converted)> ConvertUnits(IEnumerable<(string input, Speed foundUnit)> foundUnits)
+        protected override IEnumerable<(IQuantity unit, IQuantity converted)> ConvertUnits(IEnumerable<Speed> foundUnits)
         {
-            foreach (var (unit, foundUnit) in foundUnits)
+            foreach (var foundUnit in foundUnits)
             {
                 foreach (var conversionUnit in ConversionUnitMapping(foundUnit.Unit))
                 {
-                    yield return (unit, foundUnit.ToUnit(conversionUnit));
+                    yield return (foundUnit, foundUnit.ToUnit(conversionUnit));
                 }
             }
         }
