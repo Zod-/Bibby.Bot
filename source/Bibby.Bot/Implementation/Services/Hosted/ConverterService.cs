@@ -50,7 +50,8 @@ namespace Bibby.Bot.Services.Hosted
             {
                 var embed = new EmbedBuilder()
                     .WithColor(Color.DarkOrange)
-                    .AddField("Conversions", response)
+                    .WithTitle("Conversions")
+                    .WithDescription(response)
                     .Build();
                 await _messageService.SendAsync(socketMessage.Channel, embed);
             }
