@@ -18,9 +18,9 @@ namespace Bibby.UnitConversion.Converters
             }
         }
 
-        private IEnumerable<SpeedUnit> ConversionUnitMapping(SpeedUnit foundUnitUnit)
+        private IEnumerable<SpeedUnit> ConversionUnitMapping(SpeedUnit foundUnit)
         {
-            switch (foundUnitUnit)
+            switch (foundUnit)
             {
                 case SpeedUnit.Undefined:
                     break;
@@ -64,7 +64,7 @@ namespace Bibby.UnitConversion.Converters
                     yield return SpeedUnit.MilePerHour;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(foundUnitUnit), foundUnitUnit, null);
+                    throw new ArgumentOutOfRangeException(nameof(foundUnit), foundUnit, null);
             }
         }
 
