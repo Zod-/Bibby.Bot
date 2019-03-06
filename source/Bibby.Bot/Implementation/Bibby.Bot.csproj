@@ -44,6 +44,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Bibby.UnitConversion\Implementation\Bibby.UnitConversion.csproj" />
+    <ProjectReference Include="..\Bibby.CustomVision\Bibby.CustomVision.csproj" />
   </ItemGroup>
 
   <ItemGroup>

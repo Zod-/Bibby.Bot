@@ -4,6 +4,7 @@ using Bibby.Bot.Services;
 using Bibby.Bot.Services.Hosted;
 using Bibby.Bot.Services.Translations;
 using Bibby.Bot.Services.TTS;
+using Bibby.CustomVision;
 using Bibby.UnitConversion.Contracts;
 using Bibby.UnitConversion.Converters;
 using Discord;
@@ -49,6 +50,8 @@ namespace Bibby.Bot
             services.Configure<DiscordOptions>(Configuration.GetSection("DiscordOptions"));
             services.Configure<AzureOptions>(Configuration.GetSection("AzureOptions"));
             services.Configure<TtsLanguages>(Configuration.GetSection("TtsLanguages"));
+            services.Configure<CustomVisionOptions>(Configuration.GetSection("CustomVision"));
+            services.Configure<ChannelOptions>(Configuration.GetSection("ChannelOptions"));
         }
 
         private static void ConfigureCustomServices(IServiceCollection services)
@@ -58,6 +61,7 @@ namespace Bibby.Bot
             services.AddSingleton<ITextToSpeech, TextToSpeech>();
             services.AddSingleton<LanguageSelection>();
             services.AddHostedService<ConverterService>();
+            services.AddHttpClient<ICatOrCroissant, CatOrCroissant>();
         }
 
         private static void ConfigureConverters(IServiceCollection services)
@@ -77,6 +81,7 @@ namespace Bibby.Bot
             services.AddHostedService<DiscordClientLogService>();
             services.AddHostedService<DiscordLoginService>();
             services.AddHostedService<PlayingStatusService>();
+            services.AddHostedService<CatOrCroissantService>();
         }
 
         private static void ConfigureCommandServices(IServiceCollection services)
