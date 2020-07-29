@@ -59,7 +59,10 @@ namespace Bibby.Bot.Services.Hosted
 
         private async Task MessageReceivedAsync(SocketMessage rawMessage)
         {
-            if (!(rawMessage is SocketUserMessage message)) return;
+            if (!(rawMessage is SocketUserMessage message))
+            {
+                return;
+            }
             if (message.Author.Id == _discordClient.CurrentUser.Id)
             {
                 return;

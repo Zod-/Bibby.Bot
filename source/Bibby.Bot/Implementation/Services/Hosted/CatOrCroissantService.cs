@@ -27,8 +27,7 @@ namespace Bibby.Bot.Services.Hosted
         private readonly ICatOrCroissant _catOrCroissant;
         private readonly ChannelOptions _channelOptions;
 
-        public CatOrCroissantService(ILogger<CatOrCroissantService> logger, DiscordSocketClient discordClient, IMessageService messageService, ICatOrCroissant catOrCroissant, IOptions<ChannelOptions> channelOptions
-        )
+        public CatOrCroissantService(ILogger<CatOrCroissantService> logger, DiscordSocketClient discordClient, IMessageService messageService, ICatOrCroissant catOrCroissant, IOptions<ChannelOptions> channelOptions)
         {
             _logger = logger;
             _discordClient = discordClient;
