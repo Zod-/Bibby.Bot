@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -7,7 +6,6 @@ using System.Threading.Tasks;
 using Bibby.Bot.Options;
 using Bibby.Bot.Utilities.Extensions;
 using Bibby.CustomVision;
-using Bibby.UnitConversion.Contracts;
 using Discord;
 using Discord.Rest;
 using Discord.WebSocket;
