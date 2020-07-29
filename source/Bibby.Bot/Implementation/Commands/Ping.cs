@@ -2,10 +2,12 @@
 using Bibby.Bot.Services;
 using Bibby.Bot.Utilities.Extensions;
 using Discord.Commands;
+using JetBrains.Annotations;
 
-namespace Bibby.Bot.Modules
+namespace Bibby.Bot.Commands
 {
-    public class PingModule : ModuleBase<ICommandContext>
+    [UsedImplicitly]
+    public class Ping : ModuleBase<ICommandContext>
     {
         public IMessageService MessageService { get; set; }
 

@@ -23,7 +23,7 @@ namespace Bibby.Bot.Services.Hosted
         private readonly IServiceProvider _services;
         private readonly DiscordOptions _options;
         private readonly ILogger<CommandHandlingService> _logger;
-        private IEnumerable<ModuleInfo> _modules;
+        private IEnumerable<ModuleInfo> _commands;
 
         public CommandHandlingService(IServiceProvider services, CommandService commandServiceService, DiscordSocketClient discordClientClient, IOptions<DiscordOptions> options, ILogger<CommandHandlingService> logger)
         {
@@ -38,7 +38,7 @@ namespace Bibby.Bot.Services.Hosted
         {
             _commandService.Log += CommandServiceOnLog;
             _discordClient.MessageReceived += MessageReceivedAsync;
-            _modules = await _commandService.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
+            _commands = await _commandService.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
         }
 
         private Task CommandServiceOnLog(LogMessage logMessage)
@@ -51,7 +51,7 @@ namespace Bibby.Bot.Services.Hosted
         {
             _commandService.Log -= CommandServiceOnLog;
             _discordClient.MessageReceived -= MessageReceivedAsync;
-            foreach (var moduleInfo in _modules)
+            foreach (var moduleInfo in _commands)
             {
                 await _commandService.RemoveModuleAsync(moduleInfo);
             }

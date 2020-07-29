@@ -3,10 +3,12 @@ using System.Threading.Tasks;
 using Bibby.Bot.Services;
 using Bibby.Bot.Services.Translations;
 using Discord.Commands;
+using JetBrains.Annotations;
 
-namespace Bibby.Bot.Modules
+namespace Bibby.Bot.Commands
 {
-    public class DerkaModule : ModuleBase<ICommandContext>
+    [UsedImplicitly]
+    public class Derka : ModuleBase<ICommandContext>
     {
         public ITranslator Translator { get; set; }
         public IMessageService MessageService { get; set; }

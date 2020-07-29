@@ -1,10 +1,13 @@
 ﻿using System.Threading.Tasks;
+using Bibby.Bot.Services;
 using Bibby.Bot.Utilities.Extensions;
 using Discord.Commands;
+using JetBrains.Annotations;
 
-namespace Bibby.Bot.Services
+namespace Bibby.Bot.Commands
 {
-    public class GdprModule : ModuleBase<ICommandContext>
+    [UsedImplicitly]
+    public class Gdpr : ModuleBase<ICommandContext>
     {
         public IMessageService MessageService { get; set; }
 

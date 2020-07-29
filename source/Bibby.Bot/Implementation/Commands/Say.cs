@@ -5,14 +5,16 @@ using Bibby.Bot.Services;
 using Bibby.Bot.Services.TTS;
 using Bibby.Bot.Utilities.Extensions;
 using Discord.Commands;
+using JetBrains.Annotations;
 
-namespace Bibby.Bot.Modules
+namespace Bibby.Bot.Commands
 {
-    public class SayModule : ModuleBase<ICommandContext>
+    [UsedImplicitly]
+    public class Say : ModuleBase<ICommandContext>
     {
         private readonly Random _rand;
 
-        public SayModule()
+        public Say()
         {
             _rand = new Random();
         }
