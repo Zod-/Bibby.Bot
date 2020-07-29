@@ -2,6 +2,6 @@
 {
     public class ChannelOptions
     {
-        public ulong[] CatOrCroissantChannels { get; set; }
+        public ulong[] CatOrCroissantChannels { get; } = new ulong[0];
     }
 }
