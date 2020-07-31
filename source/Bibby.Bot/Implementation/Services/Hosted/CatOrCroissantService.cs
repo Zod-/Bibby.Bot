@@ -19,7 +19,6 @@ namespace Bibby.Bot.Services.Hosted
     [UsedImplicitly]
     public class CatOrCroissantService : IHostedService
     {
-        private readonly ILogger<CatOrCroissantService> _logger;
         private readonly DiscordSocketClient _discordClient;
         private readonly IMessageService _messageService;
         private readonly ICatOrCroissant _catOrCroissant;
@@ -27,7 +26,6 @@ namespace Bibby.Bot.Services.Hosted
 
         public CatOrCroissantService(ILogger<CatOrCroissantService> logger, DiscordSocketClient discordClient, IMessageService messageService, ICatOrCroissant catOrCroissant, IOptions<ChannelOptions> channelOptions)
         {
-            _logger = logger;
             _discordClient = discordClient;
             _messageService = messageService;
             _catOrCroissant = catOrCroissant;

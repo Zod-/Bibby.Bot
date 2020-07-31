@@ -30,8 +30,8 @@ namespace Bibby.Bot.Utilities
         public IReadOnlyCollection<ulong> MentionedChannelIds { get; } = default;
         public IReadOnlyCollection<ulong> MentionedRoleIds { get; } = default;
         public IReadOnlyCollection<ulong> MentionedUserIds { get; } = default;
-        public MessageActivity Activity { get; }
-        public MessageApplication Application { get; }
+        public MessageActivity Activity { get; } = default;
+        public MessageApplication Application { get; } = default;
 
         public Task ModifyAsync(Action<MessageProperties> func, RequestOptions options = null)
         {
