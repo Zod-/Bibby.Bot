@@ -19,6 +19,7 @@ namespace Bibby.Bot.Utilities
         public MessageSource Source { get; } = default;
         public bool IsTTS { get; } = default;
         public bool IsPinned { get; } = default;
+        public bool IsSuppressed { get; }
         public string Content { get; } = default;
         public DateTimeOffset Timestamp { get; } = default;
         public DateTimeOffset? EditedTimestamp { get; } = default;
@@ -32,8 +33,14 @@ namespace Bibby.Bot.Utilities
         public IReadOnlyCollection<ulong> MentionedUserIds { get; } = default;
         public MessageActivity Activity { get; } = default;
         public MessageApplication Application { get; } = default;
+        public MessageReference Reference { get; } = default;
 
         public Task ModifyAsync(Action<MessageProperties> func, RequestOptions options = null)
+        {
+            return Task.CompletedTask;
+        }
+
+        public Task ModifySuppressionAsync(bool suppressEmbeds, RequestOptions options = null)
         {
             return Task.CompletedTask;
         }
@@ -54,6 +61,11 @@ namespace Bibby.Bot.Utilities
         }
 
         public Task RemoveReactionAsync(IEmote emote, IUser user, RequestOptions options = null)
+        {
+            return Task.CompletedTask;
+        }
+
+        public Task RemoveReactionAsync(IEmote emote, ulong userId, RequestOptions options = null)
         {
             return Task.CompletedTask;
         }
