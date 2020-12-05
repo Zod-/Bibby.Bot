@@ -11,7 +11,7 @@ namespace Bibby.Bot.Services.Hosted
     {
         private readonly DiscordSocketClient _discordClient;
         private readonly IMessageService _messageService;
-        private readonly Regex _helloRegex = new Regex(@"h[eu]llo\??", RegexOptions.IgnoreCase);
+        private readonly Regex _helloRegex = new Regex(@"h[eu]llo\?", RegexOptions.IgnoreCase);
 
         public DeleteThisService(DiscordSocketClient discordClient, IMessageService messageService)
         {
