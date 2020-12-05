@@ -83,6 +83,7 @@ namespace Bibby.Bot
             services.AddHostedService<PlayingStatusService>();
             services.AddHostedService<CatOrCroissantService>();
             services.AddHostedService<ShawnService>();
+            services.AddHostedService<DeleteThisService>();
         }
 
         private static void ConfigureCommandServices(IServiceCollection services)
