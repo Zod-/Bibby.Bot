@@ -82,6 +82,7 @@ namespace Bibby.Bot
             services.AddHostedService<DiscordLoginService>();
             services.AddHostedService<PlayingStatusService>();
             services.AddHostedService<CatOrCroissantService>();
+            services.AddHostedService<ShawnService>();
         }
 
         private static void ConfigureCommandServices(IServiceCollection services)
