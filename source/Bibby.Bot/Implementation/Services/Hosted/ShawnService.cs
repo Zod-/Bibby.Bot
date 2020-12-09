@@ -41,8 +41,18 @@ namespace Bibby.Bot.Services.Hosted
             {
                 return;
             }
-            var excl = new string('!', rand.Next(0, 4));
-            await _messageService.SendAsync(socketMessage.Channel, "Shawn" + excl);
+
+            var rand = this.rand.Next(0, 10);
+            string text;
+            if (rand < 8)
+            {
+                text = "Shawn" + new string('!', rand);
+            }
+            else
+            {
+                text = "https://i.imgur.com/sjm4ahg.gif";
+            }
+            await _messageService.SendAsync(socketMessage.Channel, text);
         }
     }
 }
