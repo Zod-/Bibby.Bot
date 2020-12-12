@@ -41,17 +41,30 @@ namespace Bibby.Bot.Services.Hosted
             {
                 return;
             }
+            string text = string.Empty;
+            var textSelection = rand.Next(0, 4);
+            switch (textSelection)
+            {
+                case 0:
+                    text = "Shawn" + new string('!', rand.Next(0, 7));
+                    break;
+                case 1:
+                    text = "Shaun" + new string('!', rand.Next(0, 7));
+                    break;
+                case 2:
+                    text = "https://i.imgur.com/sjm4ahg.gif";
+                    break;
+                case 3:
+                    text = "https://i.imgur.com/zWz6pKl.gif";
+                    break;
+            }
 
-            var rand = this.rand.Next(0, 10);
-            string text;
-            if (rand < 8)
+            // cata
+            if (rand.Next(0, 100) == 0)
             {
-                text = "Shawn" + new string('!', rand);
+                text = "https://i.imgur.com/hXDxFOL.gif";
             }
-            else
-            {
-                text = "https://i.imgur.com/sjm4ahg.gif";
-            }
+
             await _messageService.SendAsync(socketMessage.Channel, text);
         }
     }
